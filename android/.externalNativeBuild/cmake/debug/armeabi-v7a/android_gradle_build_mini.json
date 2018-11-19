@@ -1,0 +1,106 @@
+{
+  "buildFiles": [
+    "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a --target clean"
+  ],
+  "libraries": {
+    "G726Decoder-Debug-armeabi-v7a": {
+      "artifactName": "G726Decoder",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a --target G726Decoder",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/debug/obj/armeabi-v7a/libG726Decoder.so"
+    },
+    "crypto-Debug-armeabi-v7a": {
+      "artifactName": "crypto",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libcrypto.a"
+    },
+    "ssl-Debug-armeabi-v7a": {
+      "artifactName": "ssl",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libssl.a"
+    },
+    "avcodec-56-Debug-armeabi-v7a": {
+      "artifactName": "avcodec-56",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libavcodec-56.so"
+    },
+    "RtspConnector-Debug-armeabi-v7a": {
+      "artifactName": "RtspConnector",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a --target RtspConnector",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/debug/obj/armeabi-v7a/libRtspConnector.so"
+    },
+    "AACDecoder-Debug-armeabi-v7a": {
+      "artifactName": "AACDecoder",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a --target AACDecoder",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/debug/obj/armeabi-v7a/libAACDecoder.so"
+    },
+    "swscale-3-Debug-armeabi-v7a": {
+      "artifactName": "swscale-3",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libswscale-3.so"
+    },
+    "g711-Debug-armeabi-v7a": {
+      "artifactName": "g711",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libG711Decoder.so"
+    },
+    "G711Decoder-Debug-armeabi-v7a": {
+      "artifactName": "G711Decoder",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a --target G711Decoder",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/debug/obj/armeabi-v7a/libG711Decoder.so"
+    },
+    "avdevice-56-Debug-armeabi-v7a": {
+      "artifactName": "avdevice-56",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libavdevice-56.so"
+    },
+    "faad2-Debug-armeabi-v7a": {
+      "artifactName": "faad2",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libfaad2.so"
+    },
+    "avutil-54-Debug-armeabi-v7a": {
+      "artifactName": "avutil-54",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libavutil-54.so"
+    },
+    "avformat-56-Debug-armeabi-v7a": {
+      "artifactName": "avformat-56",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libavformat-56.so"
+    },
+    "avfilter-5-Debug-armeabi-v7a": {
+      "artifactName": "avfilter-5",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libavfilter-5.so"
+    },
+    "swresample-1-Debug-armeabi-v7a": {
+      "artifactName": "swresample-1",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libswresample-1.so"
+    },
+    "DLinkCrypto-Debug-armeabi-v7a": {
+      "artifactName": "DLinkCrypto",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a --target DLinkCrypto",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/debug/obj/armeabi-v7a/libDLinkCrypto.so"
+    },
+    "DecoderInterface-Debug-armeabi-v7a": {
+      "artifactName": "DecoderInterface",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a --target DecoderInterface",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/debug/obj/armeabi-v7a/libDecoderInterface.so"
+    },
+    "g726-Debug-armeabi-v7a": {
+      "artifactName": "g726",
+      "abi": "armeabi-v7a",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/armeabi-v7a/libG726Decoder.so"
+    }
+  }
+}

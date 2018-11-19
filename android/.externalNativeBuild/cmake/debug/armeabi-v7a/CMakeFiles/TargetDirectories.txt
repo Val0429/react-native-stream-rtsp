@@ -1,0 +1,8 @@
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/edit_cache.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/G726Decoder.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/G711Decoder.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/AACDecoder.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/DecoderInterface.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/RtspConnector.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/DLinkCrypto.dir

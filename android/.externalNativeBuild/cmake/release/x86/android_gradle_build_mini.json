@@ -1,0 +1,106 @@
+{
+  "buildFiles": [
+    "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/release/x86 --target clean"
+  ],
+  "libraries": {
+    "G711Decoder-Release-x86": {
+      "artifactName": "G711Decoder",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/release/x86 --target G711Decoder",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/release/obj/x86/libG711Decoder.so"
+    },
+    "g726-Release-x86": {
+      "artifactName": "g726",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libG726Decoder.so"
+    },
+    "swresample-1-Release-x86": {
+      "artifactName": "swresample-1",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libswresample-1.so"
+    },
+    "avcodec-56-Release-x86": {
+      "artifactName": "avcodec-56",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libavcodec-56.so"
+    },
+    "RtspConnector-Release-x86": {
+      "artifactName": "RtspConnector",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/release/x86 --target RtspConnector",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/release/obj/x86/libRtspConnector.so"
+    },
+    "avdevice-56-Release-x86": {
+      "artifactName": "avdevice-56",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libavdevice-56.so"
+    },
+    "G726Decoder-Release-x86": {
+      "artifactName": "G726Decoder",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/release/x86 --target G726Decoder",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/release/obj/x86/libG726Decoder.so"
+    },
+    "avformat-56-Release-x86": {
+      "artifactName": "avformat-56",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libavformat-56.so"
+    },
+    "faad2-Release-x86": {
+      "artifactName": "faad2",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libfaad2.so"
+    },
+    "ssl-Release-x86": {
+      "artifactName": "ssl",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libssl.a"
+    },
+    "avfilter-5-Release-x86": {
+      "artifactName": "avfilter-5",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libavfilter-5.so"
+    },
+    "DecoderInterface-Release-x86": {
+      "artifactName": "DecoderInterface",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/release/x86 --target DecoderInterface",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/release/obj/x86/libDecoderInterface.so"
+    },
+    "swscale-3-Release-x86": {
+      "artifactName": "swscale-3",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libswscale-3.so"
+    },
+    "g711-Release-x86": {
+      "artifactName": "g711",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libG711Decoder.so"
+    },
+    "DLinkCrypto-Release-x86": {
+      "artifactName": "DLinkCrypto",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/release/x86 --target DLinkCrypto",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/release/obj/x86/libDLinkCrypto.so"
+    },
+    "avutil-54-Release-x86": {
+      "artifactName": "avutil-54",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libavutil-54.so"
+    },
+    "AACDecoder-Release-x86": {
+      "artifactName": "AACDecoder",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/release/x86 --target AACDecoder",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/build/intermediates/cmake/release/obj/x86/libAACDecoder.so"
+    },
+    "crypto-Release-x86": {
+      "artifactName": "crypto",
+      "abi": "x86",
+      "output": "/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/src/main/jniLibs/x86/libcrypto.a"
+    }
+  }
+}

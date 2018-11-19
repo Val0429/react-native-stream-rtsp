@@ -13,6 +13,8 @@ public class RNStreamRtspModule extends ReactContextBaseJavaModule {
   public RNStreamRtspModule(ReactApplicationContext reactContext) {
     super(reactContext);
     this.reactContext = reactContext;
+
+    MainApplication.setCurrentActivity(this.getCurrentActivity());
   }
 
   @Override

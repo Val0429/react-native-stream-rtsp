@@ -1,0 +1,8 @@
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/x86/CMakeFiles/edit_cache.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/x86/CMakeFiles/G726Decoder.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/x86/CMakeFiles/G711Decoder.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/x86/CMakeFiles/AACDecoder.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/x86/CMakeFiles/rebuild_cache.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/x86/CMakeFiles/DecoderInterface.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/x86/CMakeFiles/RtspConnector.dir
+/react-native/AttendanceClient/node_modules/react-native-stream-rtsp/android/.externalNativeBuild/cmake/debug/x86/CMakeFiles/DLinkCrypto.dir

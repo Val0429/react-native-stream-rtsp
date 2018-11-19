@@ -1,0 +1,106 @@
+{
+  "buildFiles": [
+    "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "D:\\Users\\Neo\\AppData\\Local\\Android\\sdk\\cmake\\3.6.3155560\\bin\\cmake.exe --build D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\.externalNativeBuild\\cmake\\debug\\arm64-v8a --target clean"
+  ],
+  "libraries": {
+    "avutil-54-Debug-arm64-v8a": {
+      "artifactName": "avutil-54",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libavutil-54.so"
+    },
+    "AACDecoder-Debug-arm64-v8a": {
+      "artifactName": "AACDecoder",
+      "buildCommand": "D:\\Users\\Neo\\AppData\\Local\\Android\\sdk\\cmake\\3.6.3155560\\bin\\cmake.exe --build D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\.externalNativeBuild\\cmake\\debug\\arm64-v8a --target AACDecoder",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\build\\intermediates\\cmake\\debug\\obj\\arm64-v8a\\libAACDecoder.so"
+    },
+    "crypto-Debug-arm64-v8a": {
+      "artifactName": "crypto",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libcrypto.a"
+    },
+    "avformat-56-Debug-arm64-v8a": {
+      "artifactName": "avformat-56",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libavformat-56.so"
+    },
+    "avfilter-5-Debug-arm64-v8a": {
+      "artifactName": "avfilter-5",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libavfilter-5.so"
+    },
+    "RtspConnector-Debug-arm64-v8a": {
+      "artifactName": "RtspConnector",
+      "buildCommand": "D:\\Users\\Neo\\AppData\\Local\\Android\\sdk\\cmake\\3.6.3155560\\bin\\cmake.exe --build D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\.externalNativeBuild\\cmake\\debug\\arm64-v8a --target RtspConnector",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\build\\intermediates\\cmake\\debug\\obj\\arm64-v8a\\libRtspConnector.so"
+    },
+    "g726-Debug-arm64-v8a": {
+      "artifactName": "g726",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libG726Decoder.so"
+    },
+    "G726Decoder-Debug-arm64-v8a": {
+      "artifactName": "G726Decoder",
+      "buildCommand": "D:\\Users\\Neo\\AppData\\Local\\Android\\sdk\\cmake\\3.6.3155560\\bin\\cmake.exe --build D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\.externalNativeBuild\\cmake\\debug\\arm64-v8a --target G726Decoder",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\build\\intermediates\\cmake\\debug\\obj\\arm64-v8a\\libG726Decoder.so"
+    },
+    "avdevice-56-Debug-arm64-v8a": {
+      "artifactName": "avdevice-56",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libavdevice-56.so"
+    },
+    "swscale-3-Debug-arm64-v8a": {
+      "artifactName": "swscale-3",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libswscale-3.so"
+    },
+    "ssl-Debug-arm64-v8a": {
+      "artifactName": "ssl",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libssl.a"
+    },
+    "DLinkCrypto-Debug-arm64-v8a": {
+      "artifactName": "DLinkCrypto",
+      "buildCommand": "D:\\Users\\Neo\\AppData\\Local\\Android\\sdk\\cmake\\3.6.3155560\\bin\\cmake.exe --build D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\.externalNativeBuild\\cmake\\debug\\arm64-v8a --target DLinkCrypto",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\build\\intermediates\\cmake\\debug\\obj\\arm64-v8a\\libDLinkCrypto.so"
+    },
+    "avcodec-56-Debug-arm64-v8a": {
+      "artifactName": "avcodec-56",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libavcodec-56.so"
+    },
+    "G711Decoder-Debug-arm64-v8a": {
+      "artifactName": "G711Decoder",
+      "buildCommand": "D:\\Users\\Neo\\AppData\\Local\\Android\\sdk\\cmake\\3.6.3155560\\bin\\cmake.exe --build D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\.externalNativeBuild\\cmake\\debug\\arm64-v8a --target G711Decoder",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\build\\intermediates\\cmake\\debug\\obj\\arm64-v8a\\libG711Decoder.so"
+    },
+    "swresample-1-Debug-arm64-v8a": {
+      "artifactName": "swresample-1",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libswresample-1.so"
+    },
+    "faad2-Debug-arm64-v8a": {
+      "artifactName": "faad2",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libfaad2.so"
+    },
+    "g711-Debug-arm64-v8a": {
+      "artifactName": "g711",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\src\\main\\jniLibs\\arm64-v8a\\libG711Decoder.so"
+    },
+    "DecoderInterface-Debug-arm64-v8a": {
+      "artifactName": "DecoderInterface",
+      "buildCommand": "D:\\Users\\Neo\\AppData\\Local\\Android\\sdk\\cmake\\3.6.3155560\\bin\\cmake.exe --build D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\.externalNativeBuild\\cmake\\debug\\arm64-v8a --target DecoderInterface",
+      "abi": "arm64-v8a",
+      "output": "D:\\work\\android\\STUDY\\react-native-module\\react-native-stream-rtsp\\android\\build\\intermediates\\cmake\\debug\\obj\\arm64-v8a\\libDecoderInterface.so"
+    }
+  }
+}

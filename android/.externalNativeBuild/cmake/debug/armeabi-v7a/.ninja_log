@@ -1,0 +1,13 @@
+# ninja log v5
+1	196	0	CMakeFiles/DecoderInterface.dir/src/main/cpp/FFMPEG/DecoderInterface.c.o	d0d430868f8c832a
+198	246	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/libDecoderInterface.so	5303929da17724c8
+0	381	0	CMakeFiles/DLinkCrypto.dir/src/main/cpp/OpenSSL/DLinkCrypto.cpp.o	9ae3a355d516d5a9
+381	542	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/libDLinkCrypto.so	13d0458e2745bdd1
+0	136	0	CMakeFiles/G711Decoder.dir/src/main/cpp/G711Decoder/G711Decoder.cpp.o	39671fe40d600bd1
+136	171	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/libG711Decoder.so	e417b5e66cccd60f
+0	169	0	CMakeFiles/AACDecoder.dir/src/main/cpp/AACDecoder/AACDecoder.cpp.o	bfe6e49797b7ff32
+169	203	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/libAACDecoder.so	b21cfc2114ec5cb3
+0	248	0	CMakeFiles/RtspConnector.dir/src/main/cpp/FFMPEG/RtspConnector.cpp.o	e7f02e7e2c9c85a5
+248	285	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/libRtspConnector.so	eb1352f376446741
+0	159	0	CMakeFiles/G726Decoder.dir/src/main/cpp/G726Decoder/G726Decoder.cpp.o	2a18ecd41bae086c
+160	196	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/libG726Decoder.so	1154575d3bda4f00
