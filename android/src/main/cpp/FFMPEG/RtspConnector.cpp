@@ -210,6 +210,11 @@ void* runRTSPThread(void* args)
         return NULL;
     }
 
+    unsigned char sps_pps[1024] = {0};
+    for (int i=0; i<avFormatContext->streams[0]->codec->extradata_size; i++) {
+        sps_pps[i] = avFormatContext->streams[0]->codec->extradata[i];
+    }
+
     int video_stream_index = av_find_best_stream(avFormatContext, AVMEDIA_TYPE_VIDEO, -1, -1, NULL, 0);
     int audio_stream_index = av_find_best_stream(avFormatContext, AVMEDIA_TYPE_AUDIO, -1, -1, NULL, 0);
 
@@ -261,36 +266,50 @@ void* runRTSPThread(void* args)
 //        jniEnv->CallVoidMethod(JavaObj, sayHello3, _delegateID, jbyteArr);
 
     /////
+    int sps_pps_length = avFormatContext->streams[0]->codec->extradata_size;
+    bool needSpsPps = true;
+    bool firstFrame = true;
+
     while (getConnectionStatus()) {
         AVPacket* avp = (AVPacket*)malloc(sizeof(AVPacket));
         av_init_packet(avp);
         if (av_read_frame(avFormatContext, avp) >= 0) {
             if (avp->stream_index == video_stream_index) {
 
+                if (firstFrame) {
+                    if (avp->data[3] == 0x67 || avp->data[4] == 0x67)
+                        needSpsPps = false;
+                    firstFrame = false;
+                }
+
                 int buff_size = avp->size;
-//                jbyte* buf = new jbyte[buff_size];
+                jbyteArray jbyteArr = 0;
+                if (needSpsPps && (avp->flags&AV_PKT_FLAG_KEY)) {
+                    buff_size += sps_pps_length;
+                    jbyteArr = jniEnv->NewByteArray(buff_size);
+                    jniEnv->SetByteArrayRegion(jbyteArr, 0, sps_pps_length, (jbyte*)sps_pps);
+                    jniEnv->SetByteArrayRegion(jbyteArr, sps_pps_length, avp->size, (jbyte*)avp->data);
+                }
+                else {
+                    jbyteArr = jniEnv->NewByteArray(buff_size);
+                    jniEnv->SetByteArrayRegion(jbyteArr, 0, avp->size, (jbyte*)avp->data);
+                }
 
-                jbyteArray jbyteArr = jniEnv->NewByteArray(buff_size);
-//                jniEnv->SetByteArrayRegion(jbyteArr, 0, buff_size, buf);
-
-                jniEnv->SetByteArrayRegion(jbyteArr, 0, avp->size, (jbyte*)avp->data);
                 jniEnv->CallStaticVoidMethod(JavaProvider,
                                              videoCbMethod,
                                              _delegateID,
                                              g_videoMediaType,
                                              avp->flags&AV_PKT_FLAG_KEY,
                                              jbyteArr,
-                                             avp->size);
+                                             buff_size);
                 jniEnv->DeleteLocalRef(jbyteArr);
-//                delete[] buf;
+
             }
             else if (avp->stream_index == audio_stream_index) {
 
                 int buff_size = avp->size;
-//                jbyte* buf = new jbyte[buff_size];
 
                 jbyteArray jbyteArr = jniEnv->NewByteArray(buff_size);
-//                jniEnv->SetByteArrayRegion(jbyteArr, 0, buff_size, buf);
 
                 jniEnv->SetByteArrayRegion(jbyteArr, 0, avp->size, (jbyte*)avp->data);
                 jniEnv->CallStaticVoidMethod(JavaProvider,
@@ -303,11 +322,10 @@ void* runRTSPThread(void* args)
                                              jbyteArr,
                                              avp->size);
                 jniEnv->DeleteLocalRef(jbyteArr);
-//                delete[] buf;
             }
         }
         else {
-            usleep(200);
+            usleep(1);
         }
         av_free_packet(avp);
         free((void*)avp);
