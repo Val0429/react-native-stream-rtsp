@@ -1,6 +1,8 @@
 package com.isap.vuexpro.Stream;
 
 
+import android.util.Log;
+
 import com.isap.ACS_VideoHeader;
 import com.isap.CodecDef;
 import com.isap.RtspDelegate;
@@ -8,6 +10,10 @@ import com.isap.StreamSource;
 import com.isap.StreamSourceDelegate;
 import com.isap.codec.RtspConnector;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
+import static com.isap.CodecDef.FrameType.FRAME_TYPE_I;
 import static com.isap.CodecDef.MediaType.VIDEO_Nonsupport;
 import static com.isap.DefineTable.CAMERA_HIGH_RESOLUTION;
 import static com.isap.DefineTable.CAMERA_LOW_RESOLUTION;
@@ -18,11 +24,17 @@ import static com.isap.DefineTable.CAMERA_LOW_RESOLUTION;
 
 public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
 
-    RTSP_StreamSource _context;
+    private RTSP_StreamSource _context;
 
-    RtspConnector _rtspConnector = null;
+    private RtspConnector _rtspConnector = null;
 
-    ACS_VideoHeader _videoHeader = new ACS_VideoHeader();
+    private final int MAX_AVAILABLE_FPS = 15;
+    private Thread m_thread = null;
+    private boolean m_isRunning = false;
+    private Queue<JobItem> m_queueJob = new LinkedList<JobItem>();
+    private final Object m_lock = new Object();
+
+    private ACS_VideoHeader _videoHeader = new ACS_VideoHeader();
 
     public RTSP_StreamSource(String name,
                              String model,
@@ -47,7 +59,7 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
     private void convertNIPCAMediaType(int codingType) {
         switch (codingType) {
             case ACS_VideoHeader.VFCT_H264_IFRM:
-                _videoFrameType = CodecDef.FrameType.FRAME_TYPE_I;
+                _videoFrameType = FRAME_TYPE_I;
                 _mediaType = CodecDef.MediaType.VIDEO_H264;
                 break;
             case ACS_VideoHeader.VFCT_H264_PFRM:
@@ -82,15 +94,6 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
         if (_rtspConnector != null)
             return;
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                _rtspConnector = new RtspConnector();
-//                _rtspConnector.initRTSP(_context);
-//                _rtspConnector.start(_ip, _port, _user, _pwd, _cmdCGI);
-//            }
-//        }).start();
-
         _rtspConnector = new RtspConnector();
         _rtspConnector.initRTSP(_context);
         _rtspConnector.start(_ip, _port, _user, _pwd, _cmdCGI);
@@ -119,8 +122,70 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
         disconnect();
     }
 
+    private class JobItem {
+        public JobItem(byte[] b, CodecDef.MediaType mt, CodecDef.FrameType ft) {
+            data = b;
+            mediaType = mt;
+            frameType = ft;
+        }
+        public byte[] data;
+        public CodecDef.MediaType mediaType;
+        public CodecDef.FrameType frameType;
+    }
+
+    public void startQueueJob() {
+        synchronized (m_lock) {
+            if (m_thread == null) {
+                m_isRunning = true;
+                m_thread = new Thread(new queueRunner());
+                m_thread.start();
+            }
+        }
+    }
+
+    public void stopQueueJob() {
+        synchronized (m_lock) {
+            if (m_thread != null) {
+                try {
+                    m_isRunning = false;
+                    m_thread.join();
+                    m_thread = null;
+                    m_queueJob.clear();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private class queueRunner implements Runnable {
+
+        @Override
+        public void run() {
+            while (m_isRunning) {
+                try {
+                    JobItem item = null;
+
+                    synchronized (m_lock) {
+                        item = m_queueJob.poll();
+                    }
+
+                    if (item == null) {
+                        Thread.sleep(10);
+                        continue;
+                    }
+
+                    _delegate.didReceiveVideoData(item.data, item.mediaType, item.frameType, System.currentTimeMillis() * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public void doPlay()
     {
+        startQueueJob();
         connect();
         doChangeAction(ACTION_STATUS.ACTION_STATUS_PLAY);
     }
@@ -129,12 +194,14 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
     {
         doChangeAction(ACTION_STATUS.ACTION_STATUS_PAUSE);
         disconnect();
+        stopQueueJob();
     }
 
     public void doStop()
     {
         doChangeAction(ACTION_STATUS.ACTION_STATUS_STOP);
         disconnect();
+        stopQueueJob();
     }
 
     public void setHighResolution(boolean high_resolution)
@@ -157,8 +224,8 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
     }
 
     @Override
-    public void didReadVideoData(byte[] data, CodecDef.MediaType mediaType, CodecDef.FrameType frameType) {
-        _delegate.didReceiveVideoData(data, mediaType, frameType, System.currentTimeMillis() * 1000);
+    public void didReadVideoData(byte[] data, CodecDef.MediaType mt, CodecDef.FrameType ft) {
+        m_queueJob.add(new JobItem(data, mt, ft));
     }
 
     @Override

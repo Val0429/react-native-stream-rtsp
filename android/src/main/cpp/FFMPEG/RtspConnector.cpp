@@ -325,7 +325,7 @@ void* runRTSPThread(void* args)
             }
         }
         else {
-            usleep(1);
+            usleep(10);
         }
         av_free_packet(avp);
         free((void*)avp);
