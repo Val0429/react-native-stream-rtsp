@@ -12,6 +12,8 @@ import com.isap.codec.RtspConnector;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.isap.CodecDef.FrameType.FRAME_TYPE_I;
 import static com.isap.CodecDef.MediaType.VIDEO_Nonsupport;
@@ -34,6 +36,10 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
     private Queue<JobItem> m_queueJob = new LinkedList<JobItem>();
     private final Object m_lock = new Object();
 
+    private final long NO_DATA_CHECK_TIME = 5 * 1000;
+    private Timer m_timer;
+    private long m_lastUpdateTime = 0;
+
     private ACS_VideoHeader _videoHeader = new ACS_VideoHeader();
 
     public RTSP_StreamSource(String name,
@@ -55,6 +61,18 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
     ////////////////////////////////////////////////////////////////////////////////////
     // Private functions
     ////////////////////////////////////////////////////////////////////////////////////
+
+
+    public class retryCheck extends TimerTask
+    {
+        public void run()
+        {
+            if (System.currentTimeMillis() - m_lastUpdateTime > NO_DATA_CHECK_TIME) {
+                doStop();
+                doPlay();
+            }
+        }
+    };
 
     private void convertNIPCAMediaType(int codingType) {
         switch (codingType) {
@@ -97,9 +115,15 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
         _rtspConnector = new RtspConnector();
         _rtspConnector.initRTSP(_context);
         _rtspConnector.start(_ip, _port, _user, _pwd, _cmdCGI);
+
+        m_lastUpdateTime = System.currentTimeMillis();
+        m_timer = new Timer(true);
+        m_timer.schedule(new retryCheck(), NO_DATA_CHECK_TIME, NO_DATA_CHECK_TIME);
     }
 
     private void disconnect() {
+        m_timer.cancel();
+        m_timer = null;
         if (_rtspConnector != null) {
             _rtspConnector.stop();
             _rtspConnector.deinitRTSP();
@@ -225,6 +249,7 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
 
     @Override
     public void didReadVideoData(byte[] data, CodecDef.MediaType mt, CodecDef.FrameType ft) {
+        m_lastUpdateTime = System.currentTimeMillis();
         m_queueJob.add(new JobItem(data, mt, ft));
     }
 
