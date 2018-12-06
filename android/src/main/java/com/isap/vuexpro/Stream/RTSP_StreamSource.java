@@ -200,6 +200,7 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
                     }
 
                     _delegate.didReceiveVideoData(item.data, item.mediaType, item.frameType, System.currentTimeMillis() * 1000);
+                    item.data = null;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

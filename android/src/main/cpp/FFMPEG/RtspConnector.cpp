@@ -286,9 +286,16 @@ void* runRTSPThread(void* args)
                 jbyteArray jbyteArr = 0;
                 if (needSpsPps && (avp->flags&AV_PKT_FLAG_KEY)) {
                     buff_size += sps_pps_length;
+                    unsigned char* sps_pps_and_data = new unsigned char[buff_size];
+                    memcpy(sps_pps_and_data, sps_pps, sps_pps_length);
+                    memcpy(sps_pps_and_data + sps_pps_length, avp->data, avp->size);
+
                     jbyteArr = jniEnv->NewByteArray(buff_size);
-                    jniEnv->SetByteArrayRegion(jbyteArr, 0, sps_pps_length, (jbyte*)sps_pps);
-                    jniEnv->SetByteArrayRegion(jbyteArr, sps_pps_length, avp->size, (jbyte*)avp->data);
+//                    jniEnv->SetByteArrayRegion(jbyteArr, 0, sps_pps_length, (jbyte*)sps_pps);
+//                    jniEnv->SetByteArrayRegion(jbyteArr, sps_pps_length, avp->size, (jbyte*)avp->data);
+                    jniEnv->SetByteArrayRegion(jbyteArr, 0, buff_size, (jbyte*)sps_pps_and_data);
+                    delete[] sps_pps_and_data;
+                    sps_pps_and_data = NULL;
                 }
                 else {
                     jbyteArr = jniEnv->NewByteArray(buff_size);
@@ -303,7 +310,7 @@ void* runRTSPThread(void* args)
                                              jbyteArr,
                                              buff_size);
                 jniEnv->DeleteLocalRef(jbyteArr);
-
+                jbyteArr = NULL;
             }
             else if (avp->stream_index == audio_stream_index) {
 
@@ -322,6 +329,7 @@ void* runRTSPThread(void* args)
                                              jbyteArr,
                                              avp->size);
                 jniEnv->DeleteLocalRef(jbyteArr);
+                jbyteArr = NULL;
             }
         }
         else {
