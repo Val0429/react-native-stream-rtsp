@@ -191,6 +191,11 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
                     JobItem item = null;
 
                     synchronized (m_lock) {
+                        if (m_queueJob.size() == 0) {
+                            Thread.sleep(10);
+                            continue;
+                        }
+
                         item = m_queueJob.poll();
                     }
 
