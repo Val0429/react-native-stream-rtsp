@@ -1,5 +1,7 @@
 package com.isap;
 
+import com.isap.hwdecoder.CodecDef;
+
 /**
  * Created by Neo on 2017/11/23.
  */

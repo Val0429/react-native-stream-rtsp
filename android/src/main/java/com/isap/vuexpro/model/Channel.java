@@ -2,18 +2,21 @@ package com.isap.vuexpro.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.SurfaceView;
 
 import com.isap.codec.AACDecoder;
 import com.isap.ChannelVideoDelegate;
-import com.isap.CodecDef;
 import com.isap.ImageUtility;
+
 import com.isap.vuexpro.Stream.RTSP_StreamSource;
 import com.isap.StreamSource;
 import com.isap.StreamSourceDelegate;
 import com.isap.codec.AudioPlayer;
 import com.isap.codec.G711Decoder;
 import com.isap.codec.G726Decoder;
-import com.isap.codec.VideoDecoder;
+
+import com.isap.hwdecoder.CodecDef;
+import com.isap.hwdecoder.HWDecoderInterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +51,7 @@ public class Channel extends Object implements StreamSourceDelegate {
     //    protected G72xDecoder _g72xDecoder;
     protected boolean _isAACInit = false;
     protected boolean _isG726Init = false;
-    protected VideoDecoder _videoDecoder = null;
+    protected HWDecoderInterface _videoDecoder = null;
 //    protected AvcRecorder _avcEncoder = null;
 
     private Object _decoderLock = new Object();
@@ -70,9 +73,10 @@ public class Channel extends Object implements StreamSourceDelegate {
     private int _debugFrameCount = 0;
     private final static int GC_UPDATE_TIME = 100;
 
+    private SurfaceView mSurfaceView;
 
     public Channel() {}
-    public Channel(String model, String name, String easylinkid, String ip, int port, String user, String pwd, int channelid, int profileid)
+    public Channel(String model, String name, String easylinkid, String ip, int port, String user, String pwd, int channelid, int profileid, SurfaceView surfaceView)
     {
         _model = model;
         _name = name;
@@ -89,6 +93,8 @@ public class Channel extends Object implements StreamSourceDelegate {
         _delegate = null;
         _playSound = false;
         _isRecording = false;
+
+        mSurfaceView = surfaceView;
     }
 
 
@@ -248,39 +254,7 @@ public class Channel extends Object implements StreamSourceDelegate {
     public void doTalkie(boolean isStart)
     {
     }
-//    public void startMediaRecord()
-//    {
-//        synchronized (_encoderLock)
-//        {
-//            if (_isRecording) return;
-//
-//            if (_avcEncoder != null) {
-//                _avcEncoder.stopRecording();
-//                _avcEncoder.setRecorderDelegate(null);
-//                _avcEncoder = null;
-//            }
-//            _avcEncoder = new AvcRecorder();
-//            _avcEncoder.setRecorderDelegate(this);
-//            _avcEncoder.startRecording();
-//
-//            _isRecording = true;
-//        }
-//    }
-//    public void stopMediaRecorder()
-//    {
-//        synchronized (_encoderLock)
-//        {
-//            if (!_isRecording) return;
-//
-//            if (_avcEncoder != null) {
-//                _avcEncoder.stopRecording();
-//                _avcEncoder.setRecorderDelegate(null);
-//                _avcEncoder = null;
-//            }
-//
-//            _isRecording = false;
-//        }
-//    }
+
     public void switchDayNightMode(int mode)
     {
     }
@@ -288,14 +262,7 @@ public class Channel extends Object implements StreamSourceDelegate {
     {
         return 0;
     }
-//    public void setBrightnessValue(int value)
-//    {
-//        SystemUtility.setSystemBrightnessValue(value);
-//    }
-//    public int getBrightnessValue()
-//    {
-//        return SystemUtility.getSystemBrightnessValue();
-//    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////
     // Delegate funcions
@@ -317,10 +284,6 @@ public class Channel extends Object implements StreamSourceDelegate {
             _delegate.didStatusChanged(name, action, connection);
     }
 
-//    @Override
-//    public void didReceiveData(byte[] data, byte[] info, CodecDef.MediaType type)
-//    {
-//    }
 
     @Override
     public void didReceiveVideoData(byte[] data, CodecDef.MediaType mediaType, CodecDef.FrameType frameType, long timestamp)
@@ -349,7 +312,8 @@ public class Channel extends Object implements StreamSourceDelegate {
             // if no decoder then create a new one
             if (_videoDecoder == null && mediaType != CodecDef.MediaType.VIDEO_MJPEG) {
                 _lastVideoMediaType = mediaType;
-                _videoDecoder = new VideoDecoder();
+                _videoDecoder = new HWDecoderInterface(mSurfaceView);
+                _videoDecoder.start();
             }
 
             // decode it by type
@@ -367,46 +331,46 @@ public class Channel extends Object implements StreamSourceDelegate {
                     }
                 }
                 else
-                    frame = _videoDecoder.decodeVideo(data, mediaType);
+                    _videoDecoder.decodeVideo(data, mediaType, frameType);
 
             } catch (java.lang.OutOfMemoryError e) {
                 frame = null;
                 System.gc();
             }
 
-            if (frame != null) {
-                _cachedFrameLock.lock();
+//            if (frame != null) {
+//                _cachedFrameLock.lock();
+////                Bitmap tmp = _cachedFrame;
+//                _cachedFrame = frame;
+////                if (mediaType == MediaType.VIDEO_MJPEG) {
+////                    if (tmp != null && !tmp.isRecycled()) {
+////                        tmp.recycle();
+////                        System.gc();
+////                    }
+////                }
+//
+////                recordVideoFrame(_cachedFrame, timestamp);
+//
+//                _cachedFrameLock.unlock();
+////                fnNotifyVideoFrameUpdated();
+////                if (_debugFrameCount++ > GC_UPDATE_TIME) {
+////                    _debugFrameCount = 0;
+//////                    System.gc();
+////                }
+//            } else {
+//                _cachedFrameLock.lock();
 //                Bitmap tmp = _cachedFrame;
-                _cachedFrame = frame;
-//                if (mediaType == MediaType.VIDEO_MJPEG) {
-//                    if (tmp != null && !tmp.isRecycled()) {
-//                        tmp.recycle();
-//                        System.gc();
-//                    }
-//                }
-
-//                recordVideoFrame(_cachedFrame, timestamp);
-
-                _cachedFrameLock.unlock();
-                fnNotifyVideoFrameUpdated();
-                if (_debugFrameCount++ > GC_UPDATE_TIME) {
-                    _debugFrameCount = 0;
-//                    System.gc();
-                }
-            } else {
-                _cachedFrameLock.lock();
-                Bitmap tmp = _cachedFrame;
-                _cachedFrame = null;
-                _cachedFrameLock.unlock();
-//                if (tmp != null && !tmp.isRecycled()) {
-//                    tmp.recycle();
-                tmp = null;
-                System.gc();
-//                }
-                if (_videoDecoder != null)
-                    _videoDecoder.destory();
-                _videoDecoder = null;
-            }
+//                _cachedFrame = null;
+//                _cachedFrameLock.unlock();
+////                if (tmp != null && !tmp.isRecycled()) {
+////                    tmp.recycle();
+//                tmp = null;
+//                System.gc();
+////                }
+//                if (_videoDecoder != null)
+//                    _videoDecoder.destory();
+//                _videoDecoder = null;
+//            }
         }
     }
 
@@ -553,14 +517,4 @@ public class Channel extends Object implements StreamSourceDelegate {
             }
         }
     }
-
-//    @Override
-//    public void recordingFinished(String outputPath) {
-//        synchronized (_viewers)
-//        {
-//            for (ChannelVideoDelegate viewer : _viewers) {
-//                viewer.didRecordFinished(outputPath);
-//            }
-//        }
-//    }
 }

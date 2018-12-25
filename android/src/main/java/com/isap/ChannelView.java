@@ -346,7 +346,7 @@ public class ChannelView extends GenericDraweeView implements ChannelVideoDelega
     public void Start(String ip, int port, String user, String pwd, int channelid, int profileid, String uri)
     {
         if (_channel == null)
-            _channel = new Channel("", "", "", ip, port, user, pwd, channelid, profileid);
+            _channel = new Channel("", "", "", ip, port, user, pwd, channelid, profileid, null);
         _channel.joinVideoDisplayView(this);
         _channel.Start(ip, port, user, pwd, channelid, profileid, uri);
     }

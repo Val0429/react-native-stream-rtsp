@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.isap.CodecDef;
+import com.isap.hwdecoder.CodecDef;
 import com.isap.RtspDelegate;
 
 import java.util.ArrayList;

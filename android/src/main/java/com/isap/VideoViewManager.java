@@ -1,12 +1,10 @@
 package com.isap;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.facebook.drawee.controller.AbstractDraweeControllerBuilder;
-import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableType;
@@ -14,19 +12,15 @@ import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Neo on 2017/7/24.
  */
 
-public class VideoViewManager extends SimpleViewManager<ChannelView> {
+public class VideoViewManager extends SimpleViewManager<RTSPSurfaceView> {
 
     public static final String REACT_CLASS = "VideoView";
 
@@ -67,12 +61,14 @@ public class VideoViewManager extends SimpleViewManager<ChannelView> {
     ////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    protected ChannelView createViewInstance(ThemedReactContext reactContext) {
+    protected RTSPSurfaceView createViewInstance(ThemedReactContext reactContext) {
         BRGLOG();
         MainApplication.setActivity(reactContext.getCurrentActivity());
-        ChannelView view = new ChannelView(reactContext, getDraweeControllerBuilder(), getCallerContext());
-//        ChannelView view = new ChannelView(reactContext);
-        view.setDefaultNoImage(_defaultNoImage);
+//        ChannelView view = new ChannelView(reactContext, getDraweeControllerBuilder(), getCallerContext());
+////        ChannelView view = new ChannelView(reactContext);
+//        view.setDefaultNoImage(_defaultNoImage);
+
+        RTSPSurfaceView view = new RTSPSurfaceView(reactContext);
         return view;
     }
 
@@ -103,11 +99,11 @@ public class VideoViewManager extends SimpleViewManager<ChannelView> {
         return tmp;
     }
 
-    public void receiveCommand(ChannelView cv, int commandId, @Nullable ReadableArray args) {
+    public void receiveCommand(RTSPSurfaceView cv, int commandId, @Nullable ReadableArray args) {
         if (args.size() >= 1) {
             String funcName = args.getString(0);
             try {
-                Method method = this.getClass().getDeclaredMethod(funcName, new Class[]{ChannelView.class, ReadableArray.class});
+                Method method = this.getClass().getDeclaredMethod(funcName, new Class[]{RTSPSurfaceView.class, ReadableArray.class});
                 method.invoke(this, new Object[]{cv, args});
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
@@ -131,7 +127,7 @@ public class VideoViewManager extends SimpleViewManager<ChannelView> {
     ////////////////////////////////////////////////////////////////////////////////////
     // Interface
     ////////////////////////////////////////////////////////////////////////////////////
-    public void Start(final ChannelView cv, final ReadableArray args) {
+    public void Start(final RTSPSurfaceView cv, final ReadableArray args) {
 
         new Thread(new Runnable() {
             @Override
@@ -164,7 +160,7 @@ public class VideoViewManager extends SimpleViewManager<ChannelView> {
         }).start();
     }
 
-    public void Stop(ChannelView cv, ReadableArray args) {
+    public void Stop(RTSPSurfaceView cv, ReadableArray args) {
         cv.Stop();
     }
 }

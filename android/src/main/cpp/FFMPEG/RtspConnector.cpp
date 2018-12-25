@@ -73,6 +73,7 @@ jclass JavaProvider;
 jobject JavaObj;
 jmethodID  videoCbMethod, audioCbMethod, job_id;
 jstring jstrMSG = NULL;
+struct timeval _tvLastFrameTime;
 
 jlong _delegateID;
 
@@ -122,6 +123,20 @@ void convertAudioMediaType(AVCodecID codingType)
     }
 }
 
+int ffmpeg_interrupt_cb(void *me)
+{
+    if(_tvLastFrameTime.tv_sec != 0 )
+    {
+        struct timeval tvNow;
+        gettimeofday( &tvNow, NULL );
+        if( ( tvNow.tv_sec - _tvLastFrameTime.tv_sec) > 5 ) {
+            LOGE("ffmpeg_interrupt_callback");
+            setConnectionStatus(false);
+            return 1;
+        }
+    }
+    return 0;
+}
 
 void* runRTSPThread(void* args)
 {
@@ -169,6 +184,9 @@ void* runRTSPThread(void* args)
 
     pthread_mutex_lock(&mutex);
 
+    _tvLastFrameTime.tv_sec = 0;
+    _tvLastFrameTime.tv_usec = 0;
+
     char szTimeout[16];
     int toLen = sprintf(szTimeout, "%d", 30*1000*1000);
     toLen = toLen > 15 ? 15 : toLen;
@@ -178,6 +196,9 @@ void* runRTSPThread(void* args)
     AVDictionary* rtsp_transport_opts_udp = NULL;
 
     AVFormatContext* avFormatContext = avformat_alloc_context();
+
+    avFormatContext->interrupt_callback.callback = ffmpeg_interrupt_cb;
+    avFormatContext->interrupt_callback.opaque = 0;
 
     const char* filename = g_rtspUrl;
 
@@ -273,7 +294,9 @@ void* runRTSPThread(void* args)
     while (getConnectionStatus()) {
         AVPacket* avp = (AVPacket*)malloc(sizeof(AVPacket));
         av_init_packet(avp);
+
         if (av_read_frame(avFormatContext, avp) >= 0) {
+            gettimeofday(&_tvLastFrameTime, NULL);
             if (avp->stream_index == video_stream_index) {
 
                 if (firstFrame) {
@@ -333,21 +356,17 @@ void* runRTSPThread(void* args)
             }
         }
         else {
-            usleep(10);
+            setConnectionStatus(false);
         }
-        av_free_packet(avp);
+        av_packet_unref(avp);
         free((void*)avp);
     }
-
-
-    /////
 
     if (gs_jvm->DetachCurrentThread() != JNI_OK) {
         LOGE("%s: DetachCurrentThread() failed", __FUNCTION__);
         return NULL;
     }
     /////
-
     if (rtsp_transport_opts)
         av_dict_free(&rtsp_transport_opts);
 
@@ -363,6 +382,7 @@ void* runRTSPThread(void* args)
     avformat_close_input(&avFormatContext);
     avformat_free_context(avFormatContext);
 
+    LOGE("Thread is leaving...");
     pthread_exit(0);
     return NULL;
 }

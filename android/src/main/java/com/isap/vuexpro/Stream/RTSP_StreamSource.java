@@ -4,7 +4,7 @@ package com.isap.vuexpro.Stream;
 import android.util.Log;
 
 import com.isap.ACS_VideoHeader;
-import com.isap.CodecDef;
+import com.isap.hwdecoder.CodecDef;
 import com.isap.RtspDelegate;
 import com.isap.StreamSource;
 import com.isap.StreamSourceDelegate;
@@ -15,8 +15,8 @@ import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.isap.CodecDef.FrameType.FRAME_TYPE_I;
-import static com.isap.CodecDef.MediaType.VIDEO_Nonsupport;
+import static com.isap.hwdecoder.CodecDef.FrameType.FRAME_TYPE_I;
+import static com.isap.hwdecoder.CodecDef.MediaType.VIDEO_Nonsupport;
 import static com.isap.DefineTable.CAMERA_HIGH_RESOLUTION;
 import static com.isap.DefineTable.CAMERA_LOW_RESOLUTION;
 
@@ -33,10 +33,10 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
     private final int MAX_AVAILABLE_FPS = 15;
     private Thread m_thread = null;
     private boolean m_isRunning = false;
-    private Queue<JobItem> m_queueJob = new LinkedList<JobItem>();
+//    private Queue<JobItem> m_queueJob = new LinkedList<JobItem>();
     private final Object m_lock = new Object();
 
-    private final long NO_DATA_CHECK_TIME = 5 * 1000;
+    private final long NO_DATA_CHECK_TIME = 7 * 1000;
     private Timer m_timer;
     private long m_lastUpdateTime = 0;
 
@@ -146,76 +146,8 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
         disconnect();
     }
 
-    private class JobItem {
-        public JobItem(byte[] b, CodecDef.MediaType mt, CodecDef.FrameType ft) {
-            data = b;
-            mediaType = mt;
-            frameType = ft;
-        }
-        public byte[] data;
-        public CodecDef.MediaType mediaType;
-        public CodecDef.FrameType frameType;
-    }
-
-    public void startQueueJob() {
-        synchronized (m_lock) {
-            if (m_thread == null) {
-                m_isRunning = true;
-                m_thread = new Thread(new queueRunner());
-                m_thread.start();
-            }
-        }
-    }
-
-    public void stopQueueJob() {
-        synchronized (m_lock) {
-            if (m_thread != null) {
-                try {
-                    m_isRunning = false;
-                    m_thread.join();
-                    m_thread = null;
-                    m_queueJob.clear();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    private class queueRunner implements Runnable {
-
-        @Override
-        public void run() {
-            while (m_isRunning) {
-                try {
-                    JobItem item = null;
-
-                    synchronized (m_lock) {
-                        if (m_queueJob.size() == 0) {
-                            Thread.sleep(10);
-                            continue;
-                        }
-
-                        item = m_queueJob.poll();
-                    }
-
-                    if (item == null) {
-                        Thread.sleep(10);
-                        continue;
-                    }
-
-                    _delegate.didReceiveVideoData(item.data, item.mediaType, item.frameType, System.currentTimeMillis() * 1000);
-                    item.data = null;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
     public void doPlay()
     {
-        startQueueJob();
         connect();
         doChangeAction(ACTION_STATUS.ACTION_STATUS_PLAY);
     }
@@ -224,14 +156,12 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
     {
         doChangeAction(ACTION_STATUS.ACTION_STATUS_PAUSE);
         disconnect();
-        stopQueueJob();
     }
 
     public void doStop()
     {
         doChangeAction(ACTION_STATUS.ACTION_STATUS_STOP);
         disconnect();
-        stopQueueJob();
     }
 
     public void setHighResolution(boolean high_resolution)
@@ -254,9 +184,9 @@ public class RTSP_StreamSource extends StreamSource implements RtspDelegate {
     }
 
     @Override
-    public void didReadVideoData(byte[] data, CodecDef.MediaType mt, CodecDef.FrameType ft) {
+    public void didReadVideoData(byte[] data, CodecDef.MediaType mediaType, CodecDef.FrameType frameType) {
         m_lastUpdateTime = System.currentTimeMillis();
-        m_queueJob.add(new JobItem(data, mt, ft));
+        _delegate.didReceiveVideoData(data, mediaType, frameType, System.currentTimeMillis() * 1000);
     }
 
     @Override
